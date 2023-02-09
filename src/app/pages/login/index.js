@@ -1,8 +1,11 @@
-import React from 'react'
-import styles from './index.module.css'
-import {Link} from "react-router-dom";
+import React, {useState} from 'react';
+import styles from './index.module.css';
 
 export default function LoginPage() {
+    const [login, setLogin] = useState(false)
+    const loginHandle = () => {
+        setLogin(!login)
+    }
   return (
     <div className={styles.main}>
         <div className={styles.section_1}>
@@ -12,7 +15,7 @@ export default function LoginPage() {
             <div className={styles.title}>
                 Selamat Datang.
             </div>
-            <div clasName={styles.asset_container}>
+            <div className={styles.asset_container}>
                 <img src='login-asset.svg' className={styles.asset}/>
             </div>
         </div>
@@ -45,16 +48,16 @@ export default function LoginPage() {
                     </div>
                     <div className={styles.button_container}>
                         <button
-                            type='button' 
+                            type='submit' 
                             className={styles.login_button}
-                            onClick=''>
+                            onClick={loginHandle}>
                                 Log In
                         </button>
                     </div>
                 </form>
             </div>
             <div className={styles.signup_text}>
-                atau <Link className={styles.hyperlink} to="/signup"> Daftar Sekarang </Link>
+                atau <a href='/signup'>Daftar Sekarang</a>
             </div>
         </div>
     </div>
