@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import FillData from './app/pages/fillData';
 import LoginPage from './app/pages/login';
 import SignUpPage from './app/pages/signup';
 import './index.css';
@@ -9,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <SignUpPage />
+    <FillData />
   </React.StrictMode>
 );
 

@@ -1,0 +1,61 @@
+.main{
+    @apply
+    flex flex-col items-center
+    font-poppins
+    w-screen h-screen p-10
+}
+
+.title{
+    @apply
+    text-head-green text-5xl font-bold
+}
+
+.asset{
+    @apply
+    h-72 my-8
+}
+
+.asset > img {
+    @apply
+    h-full
+}
+
+.fill_data {
+    @apply
+    w-1/2 h-64 rounded-lg bg-dark-green
+    flex justify-center items-center px-10
+}
+
+.input_container{
+    @apply
+    my-3 w-full
+}
+
+    .input_title{
+        @apply
+        text-white font-semibold text-lg my-1
+    }
+
+    .input_field{
+        @apply
+        w-full bg-transparent
+        border border-white px-3
+        rounded-sm h-10
+    }
+
+.button_container{
+    @apply
+    flex justify-center
+}
+
+    .verif_button{
+        @apply
+        w-36 h-9 rounded-sm bg-light-green 
+        text-dark-green font-semibold text-lg
+        my-3
+    }
+
+.logout_container{
+    @apply
+    mt-5
+}
