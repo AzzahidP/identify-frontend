@@ -1,0 +1,29 @@
+.main{
+    @apply
+    flex flex-col items-center
+    font-poppins
+    w-screen h-screen p-10
+}
+
+.title{
+    @apply
+    text-head-green text-5xl font-bold
+}
+
+.webcam_container{
+    @apply
+    flex items-center justify-center
+    h-96 w-full my-8
+}
+
+.data_container{
+    @apply
+    bg-dark-green w-1/2 h-40 rounded-lg
+    text-white font-semibold text-xl
+    flex flex-col justify-center items-center
+}
+
+.info_container{
+    @apply
+    my-2
+}

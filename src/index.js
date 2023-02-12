@@ -1,16 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import FillData from './app/pages/fillData';
-import LoginPage from './app/pages/login';
-import SignUpPage from './app/pages/signup';
+import FillData from './pages/fillData';
+import LoginPage from './pages/login';
+import OpenWebCam from './pages/openWebcam';
+import SignUpPage from './pages/signup';
+import Result from './pages/result';
 import './index.css';
 
 import reportWebVitals from './reportWebVitals';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <FillData />
+    <Result />
   </React.StrictMode>
 );
 

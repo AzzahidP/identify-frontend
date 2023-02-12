@@ -1,0 +1,6 @@
+.main{
+    @apply
+    flex flex-col items-center
+    font-poppins
+    w-screen h-screen p-10
+}

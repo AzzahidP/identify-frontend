@@ -15,6 +15,9 @@ module.exports = {
         'head-green': '#2F3E46',
         'body-color': '#728196'
       },
+      scale: {
+        'minus': '-1'
+      },
     },
   },
   plugins: [],
