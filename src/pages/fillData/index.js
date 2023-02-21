@@ -3,7 +3,6 @@ import React, {useState, useRef, useEffect}from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
 import styles from './index.module.css';
-
 import {useNavigate} from 'react-router-dom';
 
 export default function FillData() {
@@ -20,6 +19,9 @@ export default function FillData() {
     getVideo();
   }, [videoRef]);
 
+  const closeModal = () => {
+    setError(!isError)
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -71,8 +73,9 @@ export default function FillData() {
                   // setFormData({});
                   // setNameInputValue('');
                   // setNumInputValue('');
-              }).finally(() => {
-                setLoading(true)
+              })
+              .finally(() => {
+                // setLoading(true)
               })
       },
       [videoRef]
@@ -83,12 +86,28 @@ export default function FillData() {
 
   return (
     <div className={styles.main}>
+        <div className={isError ? styles.modal : styles.modal_hide}>
+          <div className={styles.modal_text_container}>
+            <div className={styles.modal_text}>
+              Verifikasi Gagal
+            </div>
+            <div className={styles.modal_button_container}>
+              <button 
+              type="button" 
+              className={styles.modal_button}
+              onClick={closeModal}
+                >
+                Coba Lagi
+              </button>
+            </div>
+          </div>
+        </div>
         <div className={styles.title}>
           Lengkapi Identitas Anda
         </div>
         <form onSubmit={handleSubmit}>
           <div className={styles.webcam_container}>
-            <Webcam className="h-80 border border-dark-green rounded-lg shadow-lg transform scale-x-minus" ref={videoRef} />
+            <Webcam className="z-10 h-80 border border-dark-green rounded-lg shadow-lg transform scale-x-minus" ref={videoRef} />
           </div>
           <div className={styles.fill_data}>
             <div className={styles.input_container}>
