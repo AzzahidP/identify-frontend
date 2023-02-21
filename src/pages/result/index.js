@@ -1,14 +1,22 @@
 import { PowerSettingsNew, Verified } from '@mui/icons-material'
 import React from 'react'
 import styles from './index.module.css'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function Result() {
 
-    const FULL_NAME = 'XXXXX XXX XXXXX'
-    const ID_NUM = 'XXX XXX XXX XXX'
-    const BIRTH_PLACE = 'XX XXXXX XXXX XXXX XXX'
-    const GENDER = 'XXX'
-    const ADDRESS = 'XXXXXXXX XXXXXXX XXXXXXX XXXXX XXXX XXX XXXXX X XX XXXXX'
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    const backHome = () => {
+        navigate('/')
+    }
+
+    const FULL_NAME = location.state.data.full_name
+    const ID_NUM = location.state.data.identity_number
+    const BIRTH_PLACE = location.state.data.birthplace
+    const GENDER = location.state.data.gender
+    const ADDRESS = location.state.data.address
 
   return (
     <div className={styles.main}>
@@ -23,8 +31,8 @@ export default function Result() {
                 <div className={styles.head}>
                     Wajah
                 </div>
-                <div classname={styles.image_container}>
-                    <img src='mock-face.svg'/>
+                <div className={styles.image_container}>
+                    <img className='scale-x-minus' src={location.state.data.image}/>
                 </div>
             </div>
             <div className={styles.details_container}>
@@ -76,12 +84,14 @@ export default function Result() {
             </div>
         </div>
         <div className={styles.home_button_container}>
-            <button
-                type='button'
-                className={styles.home_button}
-                >
-                    Kembali ke Halaman Utama
-            </button>
+            <div className={styles.home_button}>
+                <button
+                    type='button'
+                    onClick={backHome}
+                    >
+                        Kembali ke Halaman Utama
+                </button>
+            </div>
         </div>
         <div className={styles.logout_container}>
           <button

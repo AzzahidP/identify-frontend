@@ -10,20 +10,22 @@
     text-head-green text-5xl font-bold
 }
 
-.asset{
+form {
     @apply
-    h-72 my-8
+    w-screen h-screen
+    flex flex-col justify-center items-center
 }
 
-.asset > img {
+.webcam_container{
     @apply
-    h-full
+    flex items-center justify-center
+    h-96 w-full
 }
 
 .fill_data {
     @apply
     w-1/2 h-64 rounded-lg bg-dark-green
-    flex justify-center items-center px-10
+    flex flex-col justify-center items-center px-10
 }
 
 .input_container{
@@ -40,16 +42,17 @@
         @apply
         w-full bg-transparent
         border border-white px-3
-        rounded-sm h-10
+        rounded-sm h-10 text-white
     }
 
 .button_container{
     @apply
-    flex justify-center
+    flex justify-center 
 }
 
     .verif_button{
         @apply
+        flex justify-center
         w-36 h-9 rounded-sm bg-light-green 
         text-dark-green font-semibold text-lg
         my-3

@@ -64,13 +64,19 @@
 .home_button_container{
     @apply
     my-4 w-full flex items-center justify-center
+    h-20 lg:h-9
 }
 
     .home_button{
         @apply
-        bg-light-green text-head-green w-1/4 rounded-md h-9
-        font-semibold text-lg
+        bg-light-green text-head-green w-1/4 rounded-md h-full
+        font-semibold text-lg flex justify-center items-center
     }
+    .home_button > button {
+        @apply
+        w-full h-full flex justify-center items-center
+    }
+
 
 .logout_container{
     @apply
