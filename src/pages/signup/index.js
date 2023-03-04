@@ -1,42 +1,125 @@
 import { Launch } from '@mui/icons-material';
-import { isDisabled } from '@testing-library/user-event/dist/utils';
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styles from './index.module.css';
+import Webcam from 'react-webcam';
+import { useNavigate } from 'react-router';
+import axios from 'axios';
 
 export default function SignUpPage() {
-    const [signup, setsignup] = useState(false)
-    const [buttonStatus, setButtonStatus] = useState(true)
 
-    const signupHandle = () => {
-        setsignup(!signup)
-        console.log(signup)
+    const navigate = useNavigate();
+    const [buttonStatus, setButtonStatus] = useState(true)
+    const videoRef = useRef(null);
+    const [formData, setFormData] = useState({});
+    const [nameInputValue, setNameInputValue] = useState('');
+    const [idNumInputValue, setIdNumInputValue] = useState('');
+    const [emailInputValue, setEmailInputValue] = useState('');
+    const [addressInputValue, setAddressInputValue] = useState('');
+    const [genderInputValue, setGenderInputValue] = useState('');
+    const [birthplaceInputValue, setBirthplaceInputValue] = useState('');
+    const [birthdateInputValue, setBirthdateInputValue] = useState('');
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        formData.name = nameInputValue;
+        formData.id_num = idNumInputValue;
+        formData.email = emailInputValue;
+        formData.address = addressInputValue;
+        formData.gender = genderInputValue;
+        formData.birthplace = birthplaceInputValue;
+        formData.birthdate = birthdateInputValue;
     }
 
-    const handleChange = (e) => {
+    const handleNameInputChange = (event) => {
+        setNameInputValue(event.target.value);
+    }
+    const handleIdNumInputChange = (event) => {
+        setIdNumInputValue(event.target.value);
+    }
+    const handleEmailInputChange = (event) => {
+        setEmailInputValue(event.target.value);
+    }
+    const handleAddressInputChange = (event) => {
+        setAddressInputValue(event.target.value);
+    }
+    const handleGenderInputChange = (event) => {
+        setGenderInputValue(event.target.value);
+    }
+    const handleBirthplaceInputChange = (event) => {
+        setBirthplaceInputValue(event.target.value);
+    }
+    const handleBirthdateInputChange = (event) => {
+        setBirthdateInputValue(event.target.value);
+    }
+
+
+    useEffect(() => {
+        getVideo();
+      }, [videoRef]);
+
+    const getVideo = () => {
+    navigator.mediaDevices
+        .getUserMedia({ video: { width: 480 } })
+        .then(stream => {
+        let video = videoRef.current;
+        video.srcObject = stream;
+        // video.play();
+        })
+        .catch(err => {
+        console.error("error:", err);
+        });
+    };
+
+    const handleAgree = (e) => {
         setButtonStatus(!buttonStatus)
     }
-  return (
+
+    const capture =React.useCallback(
+        (videoRef, formData) => {
+            const imageSrc = videoRef.current.getScreenshot();
+            formData.image = imageSrc;
+            console.log(formData)
+            // console.log(`imageSrc=${imageSrc}`)
+            axios.post(`http://127.0.0.1:5000/registration`, formData)
+                .then((res) => {
+                    console.log(`response=${res.data['data']}`)
+  
+                    navigate('/registrasi')
+  
+                })
+                .catch(error => {
+                    console.log(`error=${error}`)
+                    // setError(true)
+                })
+                .finally(() => {
+                  // setLoading(true)
+                })
+        },
+        [videoRef]
+    );
+
+    return (
     <div className={styles.main}>
+        <form>
         <div className={styles.section_1}>
             <div className={styles.logo}>
                 iDENTIFY
             </div>
-            <div className={styles.title}>
-                Solusi Verifikasi Identitas Online Menggunakan Face Recognition
+            <div className={styles.webcam_container}>
+                <Webcam className="z-10 h-full border border-dark-green rounded-lg shadow-lg transform scale-x-minus" ref={videoRef} />
             </div>
             <div className={styles.title_description}>
-                Sistem face recognition berbasis deteksi objek dengan model deep learning YOLOv7 serta diintegrasikan dengan FaceNet
+                Pastikan wajah anda tampak jelas tanpa ada objek yang menghalangi
             </div>
-            <div className={styles.more_button}>
+            {/* <div className={styles.more_button}>
                 <a>Selengkapnya <Launch className='scale-75'/> </a>
-            </div>
+            </div> */}
         </div>
         <div className={styles.section_2}>
             <div className={styles.title_2}>
                 Sign up.
             </div>
             <div className={styles.signup_form}>
-                <form>
                     <div className={styles.input_container}>
                         <p className={styles.input_title}>Nama Lengkap</p>
                         <input 
@@ -44,6 +127,7 @@ export default function SignUpPage() {
                             type='text' 
                             id='fullName' 
                             placeholder='Nama Lengkap Anda'
+                            required={true}
                         />
                     </div>
                     <div className={styles.input_container}>
@@ -53,6 +137,7 @@ export default function SignUpPage() {
                             type='number' 
                             id='identityNumber' 
                             placeholder='NIK'
+                            required={true}
                         />
                     </div>
                     <div className={styles.input_container}>
@@ -62,32 +147,54 @@ export default function SignUpPage() {
                             type='email' 
                             id='emailInput' 
                             placeholder='name@email.com'
+                            required={true}
                         />
                     </div>
                     <div className={styles.input_container}>
-                        <p className={styles.input_title}>Password</p>
+                        <p className={styles.input_title}>Alamat Domisili</p>
                         <input 
                             className={styles.input_field}
-                            type='password' 
-                            id='passwordInput' 
-                            placeholder='Password'
+                            type='text' 
+                            id='addressInput' 
+                            placeholder='Alamat domisili sesuai KTP'
+                            required={true}
                         />
                     </div>
                     <div className={styles.input_container}>
-                        <p className={styles.input_title}>Ulangi Password</p>
+                        <p className={styles.input_title}>Jenis Kelamin</p>
                         <input 
                             className={styles.input_field}
-                            type='password' 
-                            id='repeatPasswordInput' 
-                            placeholder='Password'
+                            type='text' 
+                            id='genderInput' 
+                            placeholder='Jenis Kelamin'
+                            required={true}
                         />
+                    </div>
+                    <div className={styles.input_container}>
+                        <p className={styles.input_title}>Tempat & Tanggal Lahir</p>
+                        <div className={styles.birth_info}>
+                            <input 
+                                className={styles.birthplace_input_field}
+                                type='text' 
+                                id='birthplaceInput' 
+                                placeholder='Kota/Kab'
+                                required={true}
+                            />
+                            <input 
+                                className={styles.birthdate_input_field}
+                                type='date' 
+                                id='birthdateInput'
+                                required={true}
+                            />
+                        </div>
                     </div>
                     <div className={styles.input_terms_container}>
                         <input 
                             className={styles.input_terms}
                             type='checkbox' 
                             id='terms'
-                            onChange={handleChange}
+                            onChange={handleAgree}
+                            required={true}
                         />
                         <p>Saya telah menyetujui <a href='/#'>Syarat dan Ketentuan</a></p>
                     </div>
@@ -95,16 +202,17 @@ export default function SignUpPage() {
                         <button
                             type='submit' 
                             className={styles.signup_button}
-                            onClick={signupHandle} disabled={buttonStatus}>
-                                Sign up
+                            onSubmit={handleSubmit} disabled={buttonStatus}>
+                                Daftar
                         </button>
                     </div>
-                </form>
+                
             </div>
             <div className={styles.signup_text}>
-                Sudah punya akun? <a href='/login'>Log in</a>
+                Sudah terdaftar? <a href='/verifikasi'>Verifikasi</a>
             </div>
         </div>
+        </form>
     </div>
   )
 }

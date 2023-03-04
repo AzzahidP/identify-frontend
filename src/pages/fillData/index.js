@@ -25,7 +25,7 @@ export default function FillData() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    formData.name = nameInputValue;
+    formData.nama = nameInputValue;
     formData.num = numInputValue;
     capture(videoRef, formData);
   }
@@ -54,12 +54,12 @@ export default function FillData() {
     const capture =React.useCallback(
       (videoRef, formData) => {
           const imageSrc = videoRef.current.getScreenshot();
-          formData.image = imageSrc;
+          formData.img = imageSrc;
           console.log(formData)
           // console.log(`imageSrc=${imageSrc}`)
-          axios.post(`http://127.0.0.1:5000/faceRecog`, formData)
+          axios.post(`http://192.168.18.245:5000/verification`, formData)
               .then((res) => {
-                  console.log(`response=${res.data['data']}`)
+                  console.log(`response=${res.data['message']}`)
 
                   navigate('/result',{
                     state: res.data
@@ -106,53 +106,52 @@ export default function FillData() {
           Lengkapi Identitas Anda
         </div>
         <form onSubmit={handleSubmit}>
-          <div className={styles.webcam_container}>
-            <Webcam className="z-10 h-80 border border-dark-green rounded-lg shadow-lg transform scale-x-minus" ref={videoRef} />
-          </div>
-          <div className={styles.fill_data}>
-            <div className={styles.input_container}>
-              <p className={styles.input_title}>Nama Lengkap</p>
-              <input 
-                  className={styles.input_field}
-                  type='text' 
-                  id='nameInput' 
-                  placeholder='Nama Lengkap'
-                  value={nameInputValue}
-                  onChange={handleNameInputChange}
-                  required={true}
-              />
+          <div className={styles.form_container}>
+            <div className={styles.webcam_container}>
+              <Webcam className="z-10 h-4/5 border border-dark-green rounded-lg shadow-lg transform scale-x-minus" ref={videoRef} />
             </div>
-            <div className={styles.input_container}>
-              <p className={styles.input_title}>Nomor Identitas</p>
-              <input 
-                  className={styles.input_field}
-                  type='number' 
-                  id='numberInput' 
-                  placeholder='NIK'
-                  value={numInputValue}
-                  onChange={handleNumInputChange}
-                  required={true}
-              />
-            </div>
-            <div className={styles.button_container}>
-              <div className={styles.verif_button}>
-                <button
-                    type='submit'
-                    onClick={capture}
-                    >
-                      Verifikasi
-                </button>
+            <div className={styles.fill_data_container}>
+              <div className={styles.fill_data}>
+                <div className={styles.input_container}>
+                  <p className={styles.input_title}>Nama Lengkap</p>
+                  <input 
+                      className={styles.input_field}
+                      type='text' 
+                      id='nameInput' 
+                      placeholder='Nama Lengkap'
+                      value={nameInputValue}
+                      onChange={handleNameInputChange}
+                      required={true}
+                  />
+                </div>
+                <div className={styles.input_container}>
+                  <p className={styles.input_title}>Nomor Identitas</p>
+                  <input 
+                      className={styles.input_field}
+                      type='number' 
+                      id='numberInput' 
+                      placeholder='NIK'
+                      value={numInputValue}
+                      onChange={handleNumInputChange}
+                      required={true}
+                  />
+                </div>
+                <div className={styles.button_container}>
+                  <div className={styles.verif_button}>
+                    <button
+                        type='submit'
+                        onClick={capture}
+                        >
+                          Verifikasi
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </form>
-        <div className={styles.logout_container}>
-          <button
-            type='button'
-            className={styles.logout_button}
-            >
-              <PowerSettingsNew/> Log Out
-          </button>
+        <div className={styles.daftar_text}>
+            Belum terdaftar? <a href='/'>Daftar Sekarang</a>
         </div>
     </div>
   )

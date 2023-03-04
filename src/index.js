@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import FillData from './pages/fillData';
 // import LoginPage from './pages/login';
-// import OpenWebCam from './pages/openWebcam';
-// import SignUpPage from './pages/signup';
+import SignUpPage from './pages/signup';
 import Result from './pages/result';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './index.css';
@@ -16,8 +15,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index element={<FillData/>} />
+        <Route index element={<SignUpPage/>} />
+        <Route path='verifikasi' element={<FillData/>} />
         <Route path='result' element={<Result/>} />
+        <Route path='*' element={'404 Not Found'}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

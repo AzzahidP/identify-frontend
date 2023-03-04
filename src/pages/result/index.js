@@ -12,11 +12,14 @@ export default function Result() {
         navigate('/')
     }
 
-    const FULL_NAME = location.state.data.full_name
-    const ID_NUM = location.state.data.identity_number
-    const BIRTH_PLACE = location.state.data.birthplace
-    const GENDER = location.state.data.gender
-    const ADDRESS = location.state.data.address
+    const FULL_NAME = location.state['Name']
+    const ID_NUM = location.state['NIK']
+    const BIRTH_PLACE = ''
+    // location.state.data.birthplace
+    const GENDER = ''
+    // location.state.data.gender
+    const ADDRESS = ''
+    // location.state.data.address
 
   return (
     <div className={styles.main}>
@@ -32,7 +35,7 @@ export default function Result() {
                     Wajah
                 </div>
                 <div className={styles.image_container}>
-                    <img className='scale-x-minus' src={location.state.data.image}/>
+                    <img className='scale-x-minus' src={`data:image/jpeg;base64,${location.state['ImageBytes']}`}/>
                 </div>
             </div>
             <div className={styles.details_container}>

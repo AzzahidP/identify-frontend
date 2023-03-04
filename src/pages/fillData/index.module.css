@@ -41,24 +41,35 @@
 
 .title{
     @apply
-    text-head-green text-5xl font-bold mt-6
+    text-head-green text-5xl font-bold mt-10
 }
 
 form {
     @apply
-    w-screen h-screen
-    flex flex-col justify-center items-center
+    w-screen h-5/6
+    flex justify-center items-center
+}
+
+.form_container{
+    @apply
+    w-full h-full flex flex-col
+    justify-center items-center
 }
 
 .webcam_container{
     @apply
     flex items-center justify-center
-    h-96 w-full
+    h-1/2 w-full
+}
+
+.fill_data_container{
+    @apply
+    w-full h-1/2 flex justify-center items-center
 }
 
 .fill_data {
     @apply
-    w-1/2 h-64 rounded-lg bg-dark-green
+    w-1/2 h-4/5 rounded-lg bg-dark-green
     flex flex-col justify-center items-center px-10
 }
 
@@ -92,7 +103,12 @@ form {
         my-3
     }
 
-.logout_container{
+.daftar_text {
     @apply
-    my-5
+    w-full text-center text-sm mb-5
+}
+
+.daftar_text > a {
+    @apply
+    text-sm underline text-main-green
 }

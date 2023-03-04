@@ -5,41 +5,46 @@
     w-screen h-screen
 }
 
+form {
+    @apply
+    flex flex-row
+}
+
 .section_1{
     @apply
     w-3/5 h-full py-10 pl-8 pr-14
-    flex flex-col
+    flex flex-col justify-center
     bg-head-green
 }
 
 .section_1 > .logo {
     @apply
-    text-4xl font-bold text-white mb-16
+    text-4xl font-bold text-white mb-16 absolute top-6
 }
 
-.section_1 > .title {
+.webcam_container{
     @apply
-    text-5xl font-bold text-light-green mb-12
-    leading-relaxed mt-14 mb-5
+    flex items-center justify-center
+    h-1/2 w-full
 }
 
 .section_1 > .title_description {
     @apply
-    flex w-full
-    text-lg text-gray-100 leading-normal pr-8
+    flex w-full my-6 text-center justify-center
+    text-lg text-gray-100
 }
 
-.section_1 > .more_button {
+/* .section_1 > .more_button {
     @apply
     flex justify-center items-center font-semibold text-lg text-white
     w-44 h-10 bg-main-green
     my-8
-}
+} */
 
 .section_2{
     @apply
-    w-2/5 h-full px-12 pt-20
-    flex flex-col
+    w-2/5 h-full px-12 pt-12
+    flex flex-col justify-center
     bg-none 
 }
 
@@ -50,17 +55,17 @@
 
 .section_2 > .signup_form {
     @apply
-    w-full flex mb-6
+    w-full flex flex-col mb-3
 }
 
     form {
         @apply
-        w-full
+        w-full h-full
     }
 
     .input_container {
         @apply
-        w-full my-5
+        w-full my-3
     }
     
         .input_title {
@@ -72,6 +77,25 @@
             @apply
             border w-full h-10 px-3
             border-gray-500 rounded-lg
+        }
+
+    .birth_info{
+        @apply
+        flex flex-row h-full w-full
+    }
+
+        .birthplace_input_field{
+            @apply
+            border w-full h-10 px-3
+            border-gray-500 rounded-lg
+            mr-1 w-1/3
+        }
+
+        .birthdate_input_field{
+            @apply
+            border w-full h-10 px-3
+            border-gray-500 rounded-lg
+            ml-1 w-2/3
         }
 
     .input_terms_container {
@@ -98,7 +122,7 @@
     .signup_button {
         background-color: rgb(82 121 111) !important;
         @apply
-        w-full h-full py-1
+        w-full h-full py-1 my-2
         text-center font-semibold text-lg text-white
         rounded-lg
         disabled:opacity-50
