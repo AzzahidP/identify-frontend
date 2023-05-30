@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import FillData from './pages/fillData';
-// import LoginPage from './pages/login';
-import SignUpPage from './pages/signup';
+
+import RegistrationPage from './pages/register';
 import Result from './pages/result';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './index.css';
 
 import reportWebVitals from './reportWebVitals';
+import Verification from './pages/verification';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,10 +16,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index element={<SignUpPage/>} />
-        <Route path='verifikasi' element={<FillData/>} />
-        <Route path='result' element={<Result/>} />
-        <Route path='*' element={'404 Not Found'}/>
+        <Route index element={<Verification/>} />
+        <Route path='hasil' element={<Result/>} />
+        <Route path='*' element={'404 Not Found'}/> s
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

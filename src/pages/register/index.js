@@ -1,11 +1,10 @@
-import { Launch } from '@mui/icons-material';
 import React, {useState, useEffect, useRef} from 'react';
-import styles from './index.module.css';
+import styles from './register.module.css';
 import Webcam from 'react-webcam';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export default function SignUpPage() {
+export default function RegistrationPage() {
 
     const navigate = useNavigate();
     const [buttonStatus, setButtonStatus] = useState(true)
@@ -19,6 +18,14 @@ export default function SignUpPage() {
     const [birthplaceInputValue, setBirthplaceInputValue] = useState('');
     const [birthdateInputValue, setBirthdateInputValue] = useState('');
 
+    useEffect(() => {
+        getVideo();
+      }, [videoRef]);
+
+    const handleAgree = () => {
+        setButtonStatus(!buttonStatus)
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         formData.name = nameInputValue;
@@ -28,6 +35,7 @@ export default function SignUpPage() {
         formData.gender = genderInputValue;
         formData.birthplace = birthplaceInputValue;
         formData.birthdate = birthdateInputValue;
+        capture(videoRef, formData)
     }
 
     const handleNameInputChange = (event) => {
@@ -52,47 +60,30 @@ export default function SignUpPage() {
         setBirthdateInputValue(event.target.value);
     }
 
-
-    useEffect(() => {
-        getVideo();
-      }, [videoRef]);
-
     const getVideo = () => {
     navigator.mediaDevices
         .getUserMedia({ video: { width: 480 } })
         .then(stream => {
         let video = videoRef.current;
         video.srcObject = stream;
-        // video.play();
         })
         .catch(err => {
         console.error("error:", err);
         });
     };
 
-    const handleAgree = (e) => {
-        setButtonStatus(!buttonStatus)
-    }
-
-    const capture =React.useCallback(
+    const capture = React.useCallback(
         (videoRef, formData) => {
             const imageSrc = videoRef.current.getScreenshot();
             formData.image = imageSrc;
             console.log(formData)
-            // console.log(`imageSrc=${imageSrc}`)
-            axios.post(`http://127.0.0.1:5000/registration`, formData)
+            axios.post(`https://identify-be-lpkxsgezjq-et.a.run.app/registration`, formData)
                 .then((res) => {
-                    console.log(`response=${res.data['data']}`)
-  
-                    navigate('/registrasi')
-  
+                    console.log(`response=${res.data}`)
+                    navigate('/verifikasi')
                 })
                 .catch(error => {
                     console.log(`error=${error}`)
-                    // setError(true)
-                })
-                .finally(() => {
-                  // setLoading(true)
                 })
         },
         [videoRef]
@@ -100,26 +91,24 @@ export default function SignUpPage() {
 
     return (
     <div className={styles.main}>
-        <form>
-        <div className={styles.section_1}>
-            <div className={styles.logo}>
-                iDENTIFY
+      
+            <div className={styles.section_1}>
+                <div className={styles.logo}>
+                    iDENTIFY
+                </div>
+                <div className={styles.webcam_container}>
+                    <Webcam screenshotFormat='image/png' className="z-10 h-full border border-dark-green rounded-lg shadow-lg transform scale-x-minus" ref={videoRef} />
+                </div>
+                <div className={styles.title_description}>
+                    Pastikan wajah anda tampak jelas tanpa ada objek yang menghalangi
+                </div>
             </div>
-            <div className={styles.webcam_container}>
-                <Webcam className="z-10 h-full border border-dark-green rounded-lg shadow-lg transform scale-x-minus" ref={videoRef} />
-            </div>
-            <div className={styles.title_description}>
-                Pastikan wajah anda tampak jelas tanpa ada objek yang menghalangi
-            </div>
-            {/* <div className={styles.more_button}>
-                <a>Selengkapnya <Launch className='scale-75'/> </a>
-            </div> */}
-        </div>
-        <div className={styles.section_2}>
-            <div className={styles.title_2}>
-                Sign up.
-            </div>
-            <div className={styles.signup_form}>
+            <div className={styles.section_2}>
+                <div className={styles.title_2}>
+                    Registrasi.
+                </div>
+                <form onSubmit={handleSubmit}>
+                <div className={styles.signup_form}>
                     <div className={styles.input_container}>
                         <p className={styles.input_title}>Nama Lengkap</p>
                         <input 
@@ -127,6 +116,8 @@ export default function SignUpPage() {
                             type='text' 
                             id='fullName' 
                             placeholder='Nama Lengkap Anda'
+                            value={nameInputValue}
+                            onChange={handleNameInputChange}
                             required={true}
                         />
                     </div>
@@ -137,6 +128,8 @@ export default function SignUpPage() {
                             type='number' 
                             id='identityNumber' 
                             placeholder='NIK'
+                            value={idNumInputValue}
+                            onChange={handleIdNumInputChange}
                             required={true}
                         />
                     </div>
@@ -147,6 +140,8 @@ export default function SignUpPage() {
                             type='email' 
                             id='emailInput' 
                             placeholder='name@email.com'
+                            value={emailInputValue}
+                            onChange={handleEmailInputChange}
                             required={true}
                         />
                     </div>
@@ -157,6 +152,8 @@ export default function SignUpPage() {
                             type='text' 
                             id='addressInput' 
                             placeholder='Alamat domisili sesuai KTP'
+                            value={addressInputValue}
+                            onChange={handleAddressInputChange}
                             required={true}
                         />
                     </div>
@@ -167,6 +164,8 @@ export default function SignUpPage() {
                             type='text' 
                             id='genderInput' 
                             placeholder='Jenis Kelamin'
+                            value={genderInputValue}
+                            onChange={handleGenderInputChange}
                             required={true}
                         />
                     </div>
@@ -178,12 +177,16 @@ export default function SignUpPage() {
                                 type='text' 
                                 id='birthplaceInput' 
                                 placeholder='Kota/Kab'
+                                value={birthplaceInputValue}
+                                onChange={handleBirthplaceInputChange}
                                 required={true}
                             />
                             <input 
                                 className={styles.birthdate_input_field}
                                 type='date' 
                                 id='birthdateInput'
+                                value={birthdateInputValue}
+                                onChange={handleBirthdateInputChange}
                                 required={true}
                             />
                         </div>
@@ -202,17 +205,17 @@ export default function SignUpPage() {
                         <button
                             type='submit' 
                             className={styles.signup_button}
-                            onSubmit={handleSubmit} disabled={buttonStatus}>
+                            disabled={buttonStatus}
+                            onClick={capture}>
                                 Daftar
                         </button>
                     </div>
-                
+                </div>
+                </form>
+                <div className={styles.signup_text}>
+                    Sudah terdaftar? <a href='/verifikasi'>Verifikasi</a>
+                </div>
             </div>
-            <div className={styles.signup_text}>
-                Sudah terdaftar? <a href='/verifikasi'>Verifikasi</a>
-            </div>
-        </div>
-        </form>
     </div>
   )
 }
