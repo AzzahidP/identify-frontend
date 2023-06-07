@@ -73,15 +73,13 @@ export default function Verification() {
     (formData, detectionModel) => {
       const imageSrc = videoRef.current.getScreenshot();
       formData.img = imageSrc
-      console.log(formData)
-      
       let modelUsed
       if (detectionModel === 'FaceNet'){
         modelUsed = 'facenet'
       }else{
-        modelUsed  = 'ageitgey' 
+        modelUsed  = '/v/dlib' 
       }
-      axios.post(`https://azzahid.me/verification/${modelUsed}`, formData)
+      axios.post(`https://api.azzahid.me/${modelUsed}`, formData)
       .then((res) => {
         console.log(`response=${res.data['status']}`)
         if(res.data['status']==='failed'){
